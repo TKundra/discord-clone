@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashtagIcon, SearchIcon } from "@heroicons/react/outline";
 import {
     BellIcon,
@@ -22,11 +22,16 @@ import EmojiPicker from 'emoji-picker-react';
 
 const Chat = () => {
     const [pick, setPick] = useState(false);
+    const [filtered, setFiltered] = useState([]);
     const channelId = useSelector(selectChannelId);
     const channel = useSelector(selectChannelName);
     const [user] = useAuthState(auth);
     const inputRef = useRef("");
     const chatRef = useRef(null);
+
+    useEffect(()=>{
+        setFiltered([]);
+    }, [channelId])
 
     const scrollToBottom = () => {
         chatRef.current.scrollIntoView({
@@ -62,6 +67,12 @@ const Chat = () => {
         inputRef.current.value += o.emoji
     }
 
+    function handleFilter(e){
+        setFiltered(
+            messages?.docs.filter((doc,idx) => doc.data().message.includes(e.target.value)).map((data, idx) => data.data())
+        );
+    }
+
     return (
         <div className='flex flex-col h-screen'>
             <header className='flex items-center justify-between space-x-5 border-b border-gray-800 p-4 -mt-1'>
@@ -77,6 +88,7 @@ const Chat = () => {
                     <div className="flex bg-[#202225] text-xs p-1 rounded-md">
                         <input
                             type="text"
+                            onChange={handleFilter}
                             placeholder="Search"
                             className="bg-[#202225] focus:outline-none text-white pl-1 placeholder-[#72767d]"
                         />
@@ -88,13 +100,25 @@ const Chat = () => {
             </header>
 
             <main className='flex-grow overflow-y-scroll scrollbar-hide'>
-                {messages?.docs.map((doc, idx) => {
+                {filtered && filtered.map((doc, idx) => {
+                    const { message, timestamp, name, photoURL, email } = doc;
+                    return (
+                        <Message id={doc.id} message={message} timestamp={timestamp} 
+                        name={name} photoURL={photoURL} email={email} />
+                    );
+                })}
+                {filtered.length === 0 && messages && messages?.docs.map((doc, idx) => {
                     const { message, timestamp, name, photoURL, email } = doc.data();
                     return (
                         <Message id={doc.id} message={message} timestamp={timestamp} 
                         name={name} photoURL={photoURL} email={email} />
                     );
                 })}
+                {filtered.length === 0 && messages?.docs.length === 0 && (
+                    <span className='text-sm text-[#dcddde] flex mt-4 items-center justify-center'>
+                        no messages
+                    </span>
+                )}
             </main>
 
             {pick && <span className='absolute right-5 bottom-[72px]'>

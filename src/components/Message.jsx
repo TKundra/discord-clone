@@ -12,7 +12,6 @@ const Message = ({ id, message, timestamp, name, email, photoURL }) => {
     const [user] = useAuthState(auth);
 
     return (
-        // <div className="flex items-center p-1 pl-5 my-5 mr-2 hover:bg-[#32353B] group">
         <div className="flex items-center p-1 pl-5  m-2 rounded hover:bg-[#2f3136] group">
             <img
                 src={photoURL}
