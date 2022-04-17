@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* css and use anywhere */
+@layer components {
+    .link {
+        @apply cursor-pointer font-semibold text-sm text-white
+    }
+    .server-default {
+        @apply h-10 bg-[#2C2F33] rounded-full flex justify-center items-center
+        cursor-pointer transition-all duration-100 ease-out
+    }
+    .icon {
+        @apply h-6 text-[#b9bbbe] cursor-pointer hover:text-[#dcddde];
+    }
+}
