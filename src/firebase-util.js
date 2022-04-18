@@ -4,13 +4,13 @@ import "firebase/compat/firestore";
 import { getDatabase } from "firebase/database"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB4XJcg3HeEvrQOd12Zdo1AD_34t5DGRTM",
-  authDomain: "discord-2-53fab.firebaseapp.com",
-  projectId: "discord-2-53fab",
-  storageBucket: "discord-2-53fab.appspot.com",
-  messagingSenderId: "729298462162",
-  appId: "1:729298462162:web:8111a1e3e2be505d93140b",
-  measurementId: "G-JJ59EB4B6K"
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: ""
 };
 
 // Initialize Firebase
